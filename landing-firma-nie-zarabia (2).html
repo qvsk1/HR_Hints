@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<!-- skill:chrome -->
+<style>
+/* Credit line — bottom-right */
+.design-ui-credit {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  font: 11px/1 system-ui, sans-serif;
+  color: rgba(128,128,128,0.5);
+  pointer-events: none;
+  z-index: 2147483647;
+  transition: opacity 0.4s ease;
+  user-select: none;
+  letter-spacing: 0.02em;
+}
+
+/* Hide chrome on touch devices */
+@media (hover: none) {
+  .design-ui-credit { display: none; }
+}
+
+/* Print fixes */
+@media print {
+  * {
+    transition: none !important;
+    animation: none !important;
+    box-shadow: none !important;
+  }
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .design-ui-credit { display: none !important; }
+}
+
+</style>
+<script>
+(function () {
+    // Design-ui pages are single compositions, so the whole body is editable.
+    function markEditable() {
+        document.body.classList.add('artifact-editable');
+    }
+
+    // Credit badge with idle-fade. Hover devices only.
+    function initChromeUI() {
+        if (!matchMedia('(hover: hover)').matches) return;
+
+        var credit = document.createElement('div');
+        credit.className = 'design-ui-credit';
+        credit.setAttribute('aria-hidden', 'true');
+        credit.innerHTML = '\u{1F49C} by ClickUp Brain';
+        document.body.appendChild(credit);
+
+        var timer = null;
+        var fade = function (out) { credit.style.opacity = out ? '0' : ''; };
+        fade(true);
+        var show = function () {
+            fade(false);
+            clearTimeout(timer);
+            timer = setTimeout(function () { fade(true); }, 3000);
+        };
+        document.addEventListener('mousemove', show);
+        show();
+    }
+
+    function init() {
+        markEditable();
+        initChromeUI();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
+
+</script>
+<!-- /skill:chrome -->
+<!-- skill:libraries -->
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js" integrity="sha384-wHFvAtjmgnkA2PJcMsDaCgdipf7X7YV44X/igbLHpvGiq6T5/PvFKl93grpvtbQT" crossorigin="anonymous"></script>
+<script>document.addEventListener("DOMContentLoaded",()=>lucide.createIcons())</script>
+<!-- /skill:libraries -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Firma urosła, a pieniądze przeciekają? | HR Hints</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* === BRAND HR HINTS (podmień hexy na dokładne ze style guide Webflow) === */
+    --brand-blue: oklch(52% 0.14 250);
+    --brand-blue-100: oklch(94% 0.035 250);
+    --brand-blue-50: oklch(97% 0.018 250);
+    --brand-teal: oklch(58% 0.10 195);
+    --brand-teal-100: oklch(94% 0.035 195);
+    --brand-teal-50: oklch(97% 0.018 195);
+    --brand-peach: oklch(74% 0.11 45);
+    --brand-peach-100: oklch(94% 0.04 50);
+    --brand-peach-50: oklch(97% 0.02 50);
+
+    --neutral-dark: oklch(28% 0.02 255);
+    --neutral-mid: oklch(46% 0.02 255);
+    --neutral-faint: oklch(60% 0.015 255);
+    --neutral-line: oklch(91% 0.008 255);
+    --neutral-lightest: oklch(98% 0.005 255);
+    --white: oklch(99.5% 0.002 255);
+
+    --radius-s: 10px;
+    --radius-m: 18px;
+    --radius-l: 26px;
+
+    --space-xs: 0.5rem;
+    --space-sm: 0.75rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2.5rem;
+    --space-2xl: 4rem;
+    --space-3xl: 6.5rem;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    background: var(--white);
+    color: var(--neutral-dark);
+    line-height: 1.6;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 { line-height: 1.12; letter-spacing: -0.02em; font-weight: 800; text-wrap: balance; }
+  p { text-wrap: pretty; }
+
+  .wrap { width: min(100% - 2.5rem, 1140px); margin-inline: auto; }
+  .narrow { width: min(100% - 2.5rem, 800px); margin-inline: auto; }
+
+  .section-label { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--brand-blue); background: var(--brand-blue-100); padding: 0.4rem 0.9rem; border-radius: 999px; margin-bottom: var(--space-lg); }
+
+  /* ---------- NAV ---------- */
+  nav { position: sticky; top: 0; z-index: 100; background: oklch(99.5% 0.002 255 / 0.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--neutral-line); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: var(--space-md) 0; }
+  .logo { font-weight: 800; font-size: 1.3rem; letter-spacing: -0.03em; display: flex; align-items: center; gap: 0.5rem; }
+  .logo-dot { width: 11px; height: 11px; border-radius: 999px; background: var(--brand-peach); }
+  .nav-cta { font-size: 0.9rem; font-weight: 700; color: var(--white); text-decoration: none; padding: 0.6rem 1.25rem; background: var(--brand-blue); border-radius: 999px; transition: background 0.2s var(--ease), transform 0.15s var(--ease); }
+  .nav-cta:hover { background: oklch(46% 0.14 250); transform: translateY(-1px); }
+
+  /* ---------- BUTTONS ---------- */
+  .btn-primary { display: inline-flex; align-items: center; gap: 0.55rem; background: var(--brand-blue); color: var(--white); font-weight: 700; font-size: 1.02rem; text-decoration: none; padding: 0.95rem 1.7rem; border-radius: 999px; border: none; cursor: pointer; transition: transform 0.18s var(--ease), background 0.2s var(--ease); }
+  .btn-primary:hover { background: oklch(46% 0.14 250); transform: translateY(-2px); }
+  .btn-primary i { transition: transform 0.18s var(--ease); }
+  .btn-primary:hover i { transform: translateX(3px); }
+
+  /* ---------- HERO ---------- */
+  .hero { padding: var(--space-3xl) 0 var(--space-2xl); background: linear-gradient(180deg, var(--brand-blue-50), var(--white)); }
+  .hero h1 { font-size: clamp(2.5rem, 5.6vw, 4.2rem); max-width: 17ch; margin-bottom: var(--space-lg); }
+  .hero h1 .hl { color: var(--brand-blue); }
+  .hero-lead { font-size: clamp(1.1rem, 1.6vw, 1.28rem); color: var(--neutral-mid); max-width: 58ch; margin-bottom: var(--space-xl); }
+  .cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-md) var(--space-lg); }
+  .cta-note { font-size: 0.92rem; color: var(--neutral-faint); max-width: 24ch; }
+  .hero-trust { margin-top: var(--space-2xl); padding-top: var(--space-lg); border-top: 1px solid var(--neutral-line); display: flex; flex-wrap: wrap; gap: var(--space-lg) var(--space-2xl); align-items: baseline; }
+  .hero-trust .tt-num { font-size: 1.9rem; font-weight: 800; color: var(--brand-blue); letter-spacing: -0.02em; }
+  .hero-trust .tt-lab { font-size: 0.9rem; color: var(--neutral-faint); display: block; max-width: 22ch; }
+
+  /* ---------- SYMPTOMS ---------- */
+  .symptoms { padding: var(--space-3xl) 0; }
+  .symptoms h2 { font-size: clamp(2rem, 4vw, 3rem); max-width: 18ch; margin-bottom: var(--space-md); }
+  .symptoms .sub { color: var(--neutral-mid); max-width: 56ch; margin-bottom: var(--space-2xl); font-size: 1.08rem; }
+  .sym-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-lg); }
+  .sym { padding: var(--space-xl); border-radius: var(--radius-m); border: 1px solid var(--neutral-line); transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease); }
+  .sym:nth-child(4n+1) { background: var(--brand-blue-50); }
+  .sym:nth-child(4n+2) { background: var(--brand-teal-50); }
+  .sym:nth-child(4n+3) { background: var(--brand-peach-50); }
+  .sym:nth-child(4n+4) { background: var(--brand-blue-50); }
+  .sym:hover { transform: translateY(-4px); box-shadow: 0 14px 30px oklch(28% 0.02 255 / 0.07); }
+  .sym .mark { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-md); }
+  .sym:nth-child(4n+1) .mark, .sym:nth-child(4n+4) .mark { background: var(--brand-blue-100); color: var(--brand-blue); }
+  .sym:nth-child(4n+2) .mark { background: var(--brand-teal-100); color: var(--brand-teal); }
+  .sym:nth-child(4n+3) .mark { background: var(--brand-peach-100); color: oklch(52% 0.13 40); }
+  .sym .q { font-size: 1.18rem; font-weight: 700; margin-bottom: var(--space-sm); line-height: 1.22; }
+  .sym p { color: var(--neutral-mid); font-size: 0.95rem; }
+
+  /* ---------- DIAGNOSIS ---------- */
+  .diag { padding: var(--space-3xl) 0; background: var(--neutral-lightest); }
+  .diag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2xl); align-items: center; }
+  .diag h2 { font-size: clamp(1.8rem, 3.2vw, 2.6rem); margin-bottom: var(--space-lg); max-width: 16ch; }
+  .diag p { color: var(--neutral-mid); font-size: 1.08rem; margin-bottom: var(--space-md); }
+  .diag p strong { color: var(--neutral-dark); font-weight: 700; }
+  .diag-visual { background: var(--white); border: 1px solid var(--neutral-line); border-radius: var(--radius-m); padding: var(--space-xl); }
+  .scale-row { display: flex; align-items: center; gap: var(--space-md); padding: var(--space-md) 0; }
+  .scale-row + .scale-row { border-top: 1px solid var(--neutral-line); }
+  .scale-stage { font-weight: 700; font-size: 1.05rem; min-width: 88px; }
+  .scale-bar { flex: 1; height: 8px; border-radius: 999px; background: var(--neutral-line); overflow: hidden; }
+  .scale-fill { height: 100%; border-radius: 999px; background: var(--brand-teal); }
+  .scale-fill.warn { background: var(--brand-peach); }
+  .scale-fill.bad { background: oklch(58% 0.18 28); }
+  .scale-state { font-size: 0.85rem; color: var(--neutral-faint); min-width: 92px; text-align: right; }
+
+  /* ---------- WHAT IS IT (rozbudowany opis usługi) ---------- */
+  .whatis { padding: var(--space-3xl) 0; }
+  .whatis-head { max-width: 62ch; margin-bottom: var(--space-2xl); }
+  .whatis-head h2 { font-size: clamp(1.9rem, 3.6vw, 2.9rem); margin-bottom: var(--space-md); }
+  .whatis-head p { color: var(--neutral-mid); font-size: 1.1rem; }
+  .whatis-head p + p { margin-top: var(--space-md); }
+  .whatis-head strong { color: var(--neutral-dark); font-weight: 700; }
+  .contrast { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); margin-bottom: var(--space-2xl); }
+  .contrast-col { border-radius: var(--radius-m); padding: var(--space-xl); }
+  .contrast-col.us { background: var(--brand-blue); color: var(--white); }
+  .contrast-col.them { background: var(--neutral-lightest); border: 1px solid var(--neutral-line); }
+  .contrast-col h3 { font-size: 1.25rem; margin-bottom: var(--space-lg); display: flex; align-items: center; gap: 0.6rem; }
+  .contrast-col.them h3 { color: var(--neutral-faint); }
+  .contrast-col ul { list-style: none; display: flex; flex-direction: column; gap: var(--space-md); }
+  .contrast-col li { display: flex; gap: 0.7rem; font-size: 1rem; line-height: 1.45; }
+  .contrast-col li i { flex-shrink: 0; margin-top: 2px; }
+  .contrast-col.us li { color: oklch(95% 0.02 250); }
+  .contrast-col.them li { color: var(--neutral-mid); }
+
+  /* ---------- WHEN (6 scenariuszy 1:1) ---------- */
+  .when { padding: var(--space-3xl) 0; background: var(--neutral-lightest); }
+  .when h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); max-width: 20ch; margin-bottom: var(--space-sm); }
+  .when .sub { color: var(--neutral-mid); font-size: 1.08rem; max-width: 56ch; margin-bottom: var(--space-2xl); }
+  .when-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: var(--space-lg); }
+  .when-card { background: var(--white); border: 1px solid var(--neutral-line); border-radius: var(--radius-m); padding: var(--space-xl); }
+  .when-card .wc-icon { width: 46px; height: 46px; border-radius: 13px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-md); }
+  .when-card:nth-child(3n+1) .wc-icon { background: var(--brand-blue-100); color: var(--brand-blue); }
+  .when-card:nth-child(3n+2) .wc-icon { background: var(--brand-teal-100); color: var(--brand-teal); }
+  .when-card:nth-child(3n+3) .wc-icon { background: var(--brand-peach-100); color: oklch(52% 0.13 40); }
+  .when-card h3 { font-size: 1.18rem; margin-bottom: var(--space-sm); line-height: 1.25; }
+  .when-card p { color: var(--neutral-mid); font-size: 0.98rem; }
+
+  /* ---------- METRICS (6, 1:1) ---------- */
+  .metrics { padding: var(--space-3xl) 0; }
+  .metrics-head { max-width: 52ch; margin-bottom: var(--space-2xl); }
+  .metrics-head h2 { font-size: clamp(1.8rem, 3.4vw, 2.7rem); margin-bottom: var(--space-sm); max-width: 22ch; }
+  .metrics-head p { color: var(--neutral-faint); font-size: 1rem; }
+  .met-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-lg); }
+  .met { display: flex; gap: var(--space-lg); align-items: flex-start; padding: var(--space-lg) 0; border-bottom: 1px solid var(--neutral-line); }
+  .met .num { font-size: clamp(2.2rem, 4vw, 2.9rem); font-weight: 800; line-height: 1; font-feature-settings: "tnum"; letter-spacing: -0.03em; min-width: 4.5ch; }
+  .met:nth-child(3n+1) .num { color: var(--brand-blue); }
+  .met:nth-child(3n+2) .num { color: var(--brand-teal); }
+  .met:nth-child(3n+3) .num { color: oklch(52% 0.13 40); }
+  .met .lab { color: var(--neutral-mid); font-size: 0.98rem; }
+  .met-cta { margin-top: var(--space-2xl); display: flex; justify-content: center; }
+
+  /* ---------- CTA BAND ---------- */
+  .cta-band-wrap { padding: 0; }
+  .cta-band { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-lg); padding: var(--space-xl); border-radius: var(--radius-m); background: var(--brand-teal-50); border: 1px solid var(--brand-teal-100); }
+  .cta-band .cb-text { max-width: 46ch; }
+  .cta-band .cb-text strong { font-weight: 800; font-size: 1.4rem; display: block; margin-bottom: 0.3rem; letter-spacing: -0.02em; }
+  .cta-band .cb-text span { color: var(--neutral-mid); font-size: 1rem; }
+
+  /* ---------- METHOD / STEPS ---------- */
+  .steps { padding: var(--space-3xl) 0; background: var(--neutral-lightest); }
+  .steps h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); margin-bottom: var(--space-sm); max-width: 20ch; }
+  .steps .sub { color: var(--neutral-mid); font-size: 1.08rem; max-width: 56ch; margin-bottom: var(--space-2xl); }
+  .step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--space-lg); }
+  .step { padding: var(--space-xl); border-radius: var(--radius-m); background: var(--brand-blue-50); }
+  .step:nth-child(2) { background: var(--brand-teal-50); }
+  .step:nth-child(3) { background: var(--brand-peach-50); }
+  .step:nth-child(4) { background: var(--brand-blue-50); }
+  .step .n { font-size: 1rem; font-weight: 800; color: var(--white); background: var(--brand-blue); width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 999px; margin-bottom: var(--space-lg); }
+  .step:nth-child(2) .n { background: var(--brand-teal); }
+  .step:nth-child(3) .n { background: var(--brand-peach); color: var(--neutral-dark); }
+  .step:nth-child(4) .n { background: var(--brand-blue); }
+  .step h3 { font-size: 1.2rem; margin-bottom: var(--space-sm); }
+  .step p { color: var(--neutral-mid); font-size: 0.96rem; }
+  .steps-foot { margin-top: var(--space-2xl); padding: var(--space-lg) var(--space-xl); border-radius: var(--radius-m); background: var(--white); border: 1px solid var(--neutral-line); color: var(--neutral-mid); font-size: 1rem; display: flex; align-items: center; gap: 0.7rem; }
+  .steps-foot i { color: var(--brand-blue); flex-shrink: 0; }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testi { padding: var(--space-3xl) 0; }
+  .testi h2 { font-size: clamp(1.8rem, 3.2vw, 2.5rem); max-width: 24ch; margin-bottom: var(--space-sm); }
+  .testi .sub { color: var(--neutral-mid); font-size: 1.05rem; margin-bottom: var(--space-2xl); }
+  .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: var(--space-lg); }
+  .quote { border-radius: var(--radius-m); padding: var(--space-xl); display: flex; flex-direction: column; gap: var(--space-lg); border: 1px solid var(--neutral-line); }
+  .quote:nth-child(3n+1) { border-top: 3px solid var(--brand-blue); }
+  .quote:nth-child(3n+2) { border-top: 3px solid var(--brand-peach); }
+  .quote:nth-child(3n+3) { border-top: 3px solid var(--brand-teal); }
+  .quote p { font-size: 1.02rem; color: var(--neutral-dark); line-height: 1.5; flex: 1; }
+  .quote .who { display: flex; flex-direction: column; }
+  .quote .who .nm { font-weight: 700; font-size: 0.95rem; }
+  .quote .who .rl { font-size: 0.85rem; color: var(--neutral-faint); }
+
+  /* ---------- FIT ---------- */
+  .fit { padding: var(--space-3xl) 0; background: var(--neutral-lightest); }
+  .fit h2 { font-size: clamp(1.8rem, 3.2vw, 2.6rem); margin-bottom: var(--space-2xl); max-width: 18ch; }
+  .fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); }
+  .fit-col { background: var(--white); border: 1px solid var(--neutral-line); border-radius: var(--radius-m); padding: var(--space-xl); }
+  .fit-col.yes { border-top: 3px solid var(--brand-teal); }
+  .fit-col.no { border-top: 3px solid var(--neutral-line); }
+  .fit-col h3 { font-size: 1.1rem; margin-bottom: var(--space-lg); }
+  .fit-col ul { list-style: none; display: flex; flex-direction: column; gap: var(--space-md); }
+  .fit-col li { display: flex; gap: 0.7rem; font-size: 1.02rem; line-height: 1.45; color: var(--neutral-mid); }
+  .fit-col li i { flex-shrink: 0; margin-top: 3px; }
+  .tag { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
+  .fit-col.yes .tag { color: var(--brand-teal); }
+  .fit-col.no .tag { color: var(--neutral-faint); }
+
+  /* ---------- FAQ ---------- */
+  .faq { padding: var(--space-3xl) 0; }
+  .faq h2 { font-size: clamp(1.8rem, 3.2vw, 2.5rem); margin-bottom: var(--space-2xl); max-width: 18ch; }
+  .faq-item { border-bottom: 1px solid var(--neutral-line); }
+  .faq-q { width: 100%; text-align: left; background: none; border: none; cursor: pointer; padding: var(--space-lg) 0; display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); font-family: inherit; font-size: 1.12rem; font-weight: 700; color: var(--neutral-dark); }
+  .faq-q i { flex-shrink: 0; color: var(--brand-blue); transition: transform 0.3s var(--ease); }
+  .faq-item.open .faq-q i { transform: rotate(45deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s var(--ease); }
+  .faq-a p { padding-bottom: var(--space-lg); color: var(--neutral-mid); font-size: 1rem; max-width: 72ch; }
+
+  /* ---------- FINAL ---------- */
+  .final { padding: var(--space-3xl) 0; background: var(--neutral-lightest); }
+  .final-card { background: var(--brand-blue); border-radius: var(--radius-l); padding: clamp(2rem, 5vw, 4rem); display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2xl); align-items: center; color: var(--white); }
+  .final-card h2 { font-size: clamp(1.9rem, 3.4vw, 2.8rem); margin-bottom: var(--space-md); max-width: 16ch; }
+  .final-card .fp { color: oklch(94% 0.02 250); font-size: 1.08rem; margin-bottom: var(--space-lg); }
+  .final-card .reassure { display: flex; flex-direction: column; gap: var(--space-sm); }
+  .final-card .reassure span { display: flex; align-items: center; gap: 0.6rem; font-size: 0.96rem; color: oklch(96% 0.015 250); }
+  form { background: var(--white); border-radius: var(--radius-m); padding: var(--space-xl); display: flex; flex-direction: column; gap: var(--space-md); }
+  .field { display: flex; flex-direction: column; gap: 0.35rem; }
+  .field label { font-size: 0.85rem; font-weight: 700; color: var(--neutral-mid); }
+  .field input, .field select { font-family: inherit; font-size: 1rem; padding: 0.7rem 0.85rem; border: 1.5px solid var(--neutral-line); border-radius: var(--radius-s); background: var(--white); color: var(--neutral-dark); transition: border-color 0.18s var(--ease), box-shadow 0.18s var(--ease); }
+  .field input:focus-visible, .field select:focus-visible { outline: none; border-color: var(--brand-blue); box-shadow: 0 0 0 3px var(--brand-blue-100); }
+  form button { margin-top: var(--space-xs); justify-content: center; }
+  .form-note { font-size: 0.82rem; color: var(--neutral-faint); text-align: center; }
+
+  /* ---------- STICKY MOBILE CTA ---------- */
+  .sticky-cta { position: fixed; left: 0; right: 0; bottom: 0; z-index: 90; background: oklch(99.5% 0.002 255 / 0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--neutral-line); padding: 0.7rem 1.1rem calc(0.7rem + env(safe-area-inset-bottom, 0px)); display: none; align-items: center; justify-content: space-between; gap: var(--space-md); transform: translateY(110%); transition: transform 0.4s var(--ease); }
+  .sticky-cta.show { transform: translateY(0); }
+  .sticky-cta .sc-text { display: flex; flex-direction: column; line-height: 1.2; }
+  .sticky-cta .sc-text strong { font-weight: 800; font-size: 1rem; }
+  .sticky-cta .sc-text small { font-size: 0.78rem; color: var(--neutral-faint); }
+  .sticky-cta .btn-primary { padding: 0.8rem 1.3rem; font-size: 0.95rem; white-space: nowrap; }
+
+  /* ---------- FOOTER ---------- */
+  footer { padding: var(--space-xl) 0; border-top: 1px solid var(--neutral-line); }
+  .foot-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-md); align-items: center; color: var(--neutral-faint); font-size: 0.88rem; }
+
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 860px) {
+    .diag-grid, .contrast, .fit-grid, .final-card { grid-template-columns: 1fr; }
+    .diag-visual { order: 2; }
+    :root { --space-3xl: 4.5rem; }
+    .sticky-cta { display: flex; }
+    .nav-cta { display: none; }
+    .cta-band { flex-direction: column; align-items: flex-start; }
+    footer { padding-bottom: 6rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .sticky-cta, .faq-a { transition: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <div class="logo"><span class="logo-dot"></span> HR Hints</div>
+    <a href="#kontakt" class="nav-cta">Umów rozmowę</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <span class="section-label">Dla firm, które urosły za szybko</span>
+    <h1>Firma rosła i&nbsp;rosła. Teraz <span class="hl">stoi w&nbsp;miejscu</span>, a&nbsp;pieniądze przeciekają przez palce.</h1>
+    <p class="hero-lead">Struktura, która działała przy 30 osobach, przestaje działać przy 100. Cele się rozjeżdżają, decyzje grzęzną, a Ty gasisz pożary zamiast prowadzić firmę. Interim Change Manager z HR Hints wchodzi do środka, diagnozuje, gdzie firma traci pieniądze, i układa to z powrotem, aż zacznie działać.</p>
+    <div class="cta-row">
+      <a href="#kontakt" class="btn-primary">Umów rozmowę <i data-lucide="arrow-right" width="18" height="18"></i></a>
+      <span class="cta-note">Bezpłatnie. Dla firm powyżej 50 osób.</span>
+    </div>
+    <div class="hero-trust">
+      <div><span class="tt-num">300+</span><span class="tt-lab">firm i instytucji, w których wdrożyliśmy zmianę</span></div>
+      <div><span class="tt-num">2&ndash;3 tyg.</span><span class="tt-lab">i masz gotową diagnozę z planem działania</span></div>
+      <div><span class="tt-num">Co tydzień</span><span class="tt-lab">raport z konkretnych, wdrożonych efektów</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- SYMPTOMS -->
+<section class="symptoms">
+  <div class="wrap">
+    <h2 class="reveal">Brzmi znajomo?</h2>
+    <p class="sub reveal">To nie są problemy „miękkie". To są pieniądze, które wyciekają z firmy każdego miesiąca, tylko nie widać ich w jednym miejscu. Im dłużej trwają, tym drożej kosztują.</p>
+    <div class="sym-grid">
+      <div class="sym reveal">
+        <span class="mark"><i data-lucide="user-cog" width="22" height="22"></i></span>
+        <div class="q">Wszystko zależy od Ciebie</div>
+        <p>Bez Twojej decyzji nic się nie rusza. Urosłeś, ale firma dalej działa tak, jakbyś znał imiona dzieci każdego pracownika.</p>
+      </div>
+      <div class="sym reveal">
+        <span class="mark"><i data-lucide="git-fork" width="22" height="22"></i></span>
+        <div class="q">Cele się rozjeżdżają</div>
+        <p>Każdy dział ciągnie w swoją stronę. Ustalacie plany na kwartał, a po miesiącu nikt nie wie, kto za co odpowiada.</p>
+      </div>
+      <div class="sym reveal">
+        <span class="mark"><i data-lucide="trending-down" width="22" height="22"></i></span>
+        <div class="q">Rośnie zatrudnienie, nie zyski</div>
+        <p>Zatrudniasz kolejnych ludzi, koszty rosną, a rentowność spada. Coś się nie spina, ale trudno wskazać palcem co.</p>
+      </div>
+      <div class="sym reveal">
+        <span class="mark"><i data-lucide="flame" width="22" height="22"></i></span>
+        <div class="q">Liderzy gaszą pożary</div>
+        <p>Twoi menedżerowie spędzają dnie na rozwiązywaniu konfliktów i ogarnianiu chaosu, zamiast realizować plan.</p>
+      </div>
+      <div class="sym reveal">
+        <span class="mark"><i data-lucide="users" width="22" height="22"></i></span>
+        <div class="q">Najlepsi ludzie odchodzą</div>
+        <p>Rotacja rośnie, a wraz z nią koszt rekrutacji i wdrożeń. Wiedza wychodzi z firmy razem z ludźmi.</p>
+      </div>
+      <div class="sym reveal">
+        <span class="mark"><i data-lucide="map" width="22" height="22"></i></span>
+        <div class="q">Brak planu na kolejny etap</div>
+        <p>Rosłeś intuicją, ale intuicja przestała wystarczać. Nie wiesz, w którą stronę ruszyć, żeby firma znów zaczęła zarabiać.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIAGNOSIS -->
+<section class="diag">
+  <div class="wrap diag-grid">
+    <div class="reveal">
+      <h2>To nie wina ludzi. To brak struktury, która rośnie razem z firmą.</h2>
+      <p>Firma na 30 osób trzyma się na Twojej głowie i dobrych relacjach. <strong>Przy 100 osobach to przestaje wystarczać.</strong> Kultura zaczyna żyć własnym życiem, a procesy, których nigdy nie spisaliście, po prostu się sypią.</p>
+      <p>Większość właścicieli próbuje to naprawić zatrudniając kolejne osoby albo kupując kolejne szkolenie. To nie pomaga, bo <strong>problem nie leży w ludziach, tylko w tym, jak firma jest poukładana.</strong></p>
+      <p>My zaczynamy od diagnozy: gdzie konkretnie wyciekają pieniądze i czas, a potem wdrażamy zmiany, które to zatrzymują.</p>
+    </div>
+    <div class="diag-visual reveal">
+      <div class="scale-row"><span class="scale-stage">30 osób</span><span class="scale-bar"><span class="scale-fill" style="width:90%"></span></span><span class="scale-state">Wszystko gra</span></div>
+      <div class="scale-row"><span class="scale-stage">60 osób</span><span class="scale-bar"><span class="scale-fill warn" style="width:58%"></span></span><span class="scale-state">Zaczyna zgrzytać</span></div>
+      <div class="scale-row"><span class="scale-stage">100+ osób</span><span class="scale-bar"><span class="scale-fill bad" style="width:30%"></span></span><span class="scale-state">Chaos i&nbsp;przecieki</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IS IT -->
+<section class="whatis">
+  <div class="wrap">
+    <div class="whatis-head reveal">
+      <span class="section-label">Czym jest Interim Change Manager</span>
+      <h2>Nie doradzamy. Wchodzimy do firmy i wdrażamy zmianę razem z Wami.</h2>
+      <p>Interim Change Manager to doświadczona osoba, która wchodzi do Twojej organizacji jak członek zespołu, nie jak doradca z zewnątrz. Robi diagnozę, układa konkretną roadmapę i prowadzi firmę przez zmianę za rękę, aż zacznie ona realnie działać. <strong>Pracujemy na autorskiej metodzie sprawdzonej w ponad 300 organizacjach</strong> w różnych branżach.</p>
+      <p>To nie jest jednorazowa konsultacja. To projekt, w którym odpowiadamy za wynik: poukładany zespół, przewidywalny obszar ludzki i lepszą rentowność. Co tydzień dostajesz raport z wypracowanych efektów.</p>
+    </div>
+    <div class="contrast">
+      <div class="contrast-col us reveal">
+        <h3><i data-lucide="check-circle-2" width="22" height="22" color="oklch(99% 0.002 255)"></i> HR Hints</h3>
+        <ul>
+          <li><i data-lucide="check" width="18" height="18" color="oklch(95% 0.02 250)"></i> Wchodzi do firmy i pracuje od środka, z zarządem i liderami</li>
+          <li><i data-lucide="check" width="18" height="18" color="oklch(95% 0.02 250)"></i> Robi diagnozę i daje konkretną roadmapę z terminami i wskaźnikami</li>
+          <li><i data-lucide="check" width="18" height="18" color="oklch(95% 0.02 250)"></i> Wdraża zmiany i rozlicza się z efektów co tydzień</li>
+          <li><i data-lucide="check" width="18" height="18" color="oklch(95% 0.02 250)"></i> Odpowiada za wynik biznesowy, nie za liczbę godzin</li>
+          <li><i data-lucide="check" width="18" height="18" color="oklch(95% 0.02 250)"></i> Po wdrożeniu wraca sprawdzić trwałość zmiany</li>
+        </ul>
+      </div>
+      <div class="contrast-col them reveal">
+        <h3><i data-lucide="x-circle" width="22" height="22" color="oklch(60% 0.015 255)"></i> Typowy konsultant</h3>
+        <ul>
+          <li><i data-lucide="x" width="18" height="18" color="oklch(60% 0.015 255)"></i> Przychodzi na kilka spotkań i patrzy z zewnątrz</li>
+          <li><i data-lucide="x" width="18" height="18" color="oklch(60% 0.015 255)"></i> Zostawia prezentację i listę rad do samodzielnego wdrożenia</li>
+          <li><i data-lucide="x" width="18" height="18" color="oklch(60% 0.015 255)"></i> Znika, zanim cokolwiek realnie się zmieni</li>
+          <li><i data-lucide="x" width="18" height="18" color="oklch(60% 0.015 255)"></i> Rozlicza się z godzin, nie z rezultatu</li>
+          <li><i data-lucide="x" width="18" height="18" color="oklch(60% 0.015 255)"></i> Nie bierze odpowiedzialności za to, czy zmiana się przyjmie</li>
+        </ul>
+      </div>
+    </div>
+    <div class="cta-band-wrap">
+      <div class="cta-band reveal">
+        <div class="cb-text">
+          <strong>Brzmi jak to, czego szukasz?</strong>
+          <span>Umów bezpłatną rozmowę. Powiemy wprost, czy i jak możemy pomóc Twojej firmie.</span>
+        </div>
+        <a href="#kontakt" class="btn-primary">Umów rozmowę <i data-lucide="arrow-right" width="18" height="18"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHEN (6 scenariuszy 1:1 z oferty) -->
+<section class="when">
+  <div class="wrap">
+    <h2 class="reveal">Kiedy współpraca z HR Hints jest dla Ciebie?</h2>
+    <p class="sub reveal">Operacyjne wsparcie HR: natychmiastowe, efektywne i skoncentrowane na wynikach. Poznaj sytuacje, w których wchodzimy najczęściej.</p>
+    <div class="when-grid">
+      <div class="when-card reveal">
+        <span class="wc-icon"><i data-lucide="alarm-clock" width="24" height="24"></i></span>
+        <h3>Masz nagły kryzys lub natłok pracy</h3>
+        <p>Interim Change Manager wchodzi natychmiast do organizacji i dostarcza rezultaty zaplanowane w szczegółowej roadmapie. Nie potrzebuje onboardingu. Masz zespół? Pomożemy mu. Nie masz? Działamy sami i pokazujemy, jak ułożyć procesy.</p>
+      </div>
+      <div class="when-card reveal">
+        <span class="wc-icon"><i data-lucide="compass" width="24" height="24"></i></span>
+        <h3>Nie wiesz, jak i z kim przeprowadzić transformację</h3>
+        <p>Mamy doświadczenie z ponad 300 organizacji i własną autorską metodę. Znamy powtarzalne mechanizmy, potrafimy przewidzieć konsekwencje braku odpowiednich procesów i wiemy, jak przeprowadzić oraz ocenić efektywność zmian.</p>
+      </div>
+      <div class="when-card reveal">
+        <span class="wc-icon"><i data-lucide="hourglass" width="24" height="24"></i></span>
+        <h3>Nie masz czasu</h3>
+        <p>Zatrudnienie nowych ludzi trwa, czasem miesiące, a przy złej decyzji nawet lata. Interim Change Manager wchodzi z całym zapleczem narzędzi i doświadczeń. Co tydzień dostajesz raport z wypracowanych efektów, więc wiesz, że to działa.</p>
+      </div>
+      <div class="when-card reveal">
+        <span class="wc-icon"><i data-lucide="award" width="24" height="24"></i></span>
+        <h3>Szukasz konkretnych kompetencji i doświadczenia</h3>
+        <p>Interim Change Manager nie jest kosztem na stałe wpisanym w budżet. Kupujesz określony zakres działań i dostajesz doświadczony zespół, know-how oraz sprawny system działania. Po zakończeniu wdrożeń wracamy sprawdzić trwałość zmiany.</p>
+      </div>
+      <div class="when-card reveal">
+        <span class="wc-icon"><i data-lucide="target" width="24" height="24"></i></span>
+        <h3>Zależy Ci na efekcie biznesowym, nie na pozorach</h3>
+        <p>Interim Change Manager odpowiada za wynik: poukładanie zespołu, przewidywalność obszaru ludzkiego, poprawę efektywności. Pracuje na konkretnej diagnozie, szczegółowym planie i wskaźnikach, które pozwalają mierzyć efekty.</p>
+      </div>
+      <div class="when-card reveal">
+        <span class="wc-icon"><i data-lucide="hand-helping" width="24" height="24"></i></span>
+        <h3>Nie chcesz teoretyka i „udzielacza rad"</h3>
+        <p>Interim Change Manager działa wewnętrznie, jako część organizacji, więc rozumie i widzi z bliska jej wyzwania. Wnosi też zewnętrzną perspektywę, przez co jest mniej podatny na wewnętrzne zależności, a bardziej skuteczny.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS (6, 1:1) -->
+<section class="metrics">
+  <div class="wrap">
+    <div class="metrics-head reveal">
+      <h2>Efektywne zarządzanie się po prostu opłaca</h2>
+      <p>Jakie efekty daje współpraca z HR Hints. Średnie wyniki w firmach, które przeszły z nami przez uporządkowanie organizacji.</p>
+    </div>
+    <div class="met-grid">
+      <div class="met reveal"><div class="num">95%</div><div class="lab">efektywności pracy zespołu, uzyskanej przez zwiększenie zaangażowania pracowników</div></div>
+      <div class="met reveal"><div class="num">2,5&times;</div><div class="lab">więcej osiągniętych celów zaplanowanych na kwartał</div></div>
+      <div class="met reveal"><div class="num">15%</div><div class="lab">mniejsze koszty operacyjne po uporządkowaniu procesów</div></div>
+      <div class="met reveal"><div class="num">25%</div><div class="lab">mniejsza rotacja pracowników w organizacji</div></div>
+      <div class="met reveal"><div class="num">15&nbsp;h</div><div class="lab">mniej czasu liderów tygodniowo na rozwiązywanie problemów ludzi</div></div>
+      <div class="met reveal"><div class="num">3,5&nbsp;mln</div><div class="lab">oszczędności kwartalnie na nietrafionych szkoleniach i sposobach podnoszenia kompetencji</div></div>
+    </div>
+    <div class="met-cta reveal">
+      <a href="#kontakt" class="btn-primary">Sprawdź, ile możesz odzyskać <i data-lucide="arrow-right" width="18" height="18"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- METHOD / STEPS -->
+<section class="steps">
+  <div class="wrap">
+    <h2 class="reveal">Jak wygląda współpraca, krok po kroku</h2>
+    <p class="sub reveal">To uporządkowany proces, nie luźne doradztwo. Wiesz dokładnie, co się dzieje na każdym etapie i po czym poznasz efekt.</p>
+    <div class="step-grid">
+      <div class="step reveal"><div class="n">1</div><h3>Diagnoza</h3><p>Wchodzimy do organizacji, sprawdzamy procesy, rozmawiamy z zarządem i liderami. Widzimy z bliska, gdzie firma traci pieniądze i czas.</p></div>
+      <div class="step reveal"><div class="n">2</div><h3>Roadmapa</h3><p>Po 2&ndash;3 tygodniach dostajesz konkretny plan: co zmieniamy, w jakiej kolejności, w jakim czasie i po jakich wskaźnikach poznamy, że zadziałało.</p></div>
+      <div class="step reveal"><div class="n">3</div><h3>Wdrożenie</h3><p>Pracujemy z Twoim zarządem i dyrektorami, wdrażając narzędzia i metody, prowadząc warsztaty i szkoląc liderów. Prowadzimy firmę za rękę.</p></div>
+      <div class="step reveal"><div class="n">4</div><h3>Utrwalenie</h3><p>Po zakończeniu wdrożeń wracamy sprawdzić trwałość zmiany. Zależy nam, żeby działała sama, także wtedy, gdy nas już nie ma.</p></div>
+    </div>
+    <div class="steps-foot reveal">
+      <i data-lucide="repeat" width="20" height="20"></i>
+      Elastyczny wymiar współpracy: od jednej trzeciej etatu w górę, dopasowany do skali i potrzeb Twojej firmy.
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS (realne, z oferty) -->
+<section class="testi">
+  <div class="wrap">
+    <h2 class="reveal">Właściciele, którzy mieli ten sam problem</h2>
+    <p class="sub reveal">Wybrane opinie firm, które przeszły z nami przez reorganizację, sukcesję i uporządkowanie procesów.</p>
+    <div class="testi-grid">
+      <div class="quote reveal">
+        <p>Jesteśmy w procesie reorganizacji, a dzięki wsparciu HR Hints możemy korzystać z wielu praktycznych rozwiązań dotyczących sukcesji, porządkowania procesów oraz klarownego podziału odpowiedzialności w zarządzie.</p>
+        <div class="who"><span class="nm">Natalia Kiowska-Straszewska</span><span class="rl">Prezes zarządu, PHU Profectus</span></div>
+      </div>
+      <div class="quote reveal">
+        <p>Dzisiaj mamy poukładaną strukturę organizacyjną, z jasno opisanymi odpowiedzialnościami i oczekiwaniami wobec liderów, która pozwala nam na dalszy rozwój i skalowanie.</p>
+        <div class="who"><span class="nm">Michał Sieńko</span><span class="rl">Dyrektor Operacyjny, Serafin PUH</span></div>
+      </div>
+      <div class="quote reveal">
+        <p>Dzięki metodzie Culturivy Interim Managerka przeprowadziła firmę przez trudne zmiany organizacyjne, wprowadzając zmiany w strukturze liderskiej, spisując odpowiedzialności i oczekiwania wobec liderów oraz rozwijając ich kompetencje.</p>
+        <div class="who"><span class="nm">Maciej Frąckiewicz</span><span class="rl">Prezes zarządu, Dolnośląskie Centrum Diagnostyki Laboratoryjnej</span></div>
+      </div>
+      <div class="quote reveal">
+        <p>Najważniejszym celem było zbudowanie fundamentów działania organizacji. Poukładaliśmy rutyny komunikacyjne oraz OKR-y, co przełożyło się na lepsze rozliczanie pracy, szybszą weryfikację działań i zwiększenie efektywności spotkań.</p>
+        <div class="who"><span class="nm">Dariusz Żuk</span><span class="rl">CEO &amp; Founder, AIP Seed</span></div>
+      </div>
+      <div class="quote reveal">
+        <p>Polecamy HR Hints firmom, które potrzebują partnera potrafiącego uporządkować HR i procesy operacyjne w sposób praktyczny, skuteczny i trwały, ale również przygotować firmę do skalowania.</p>
+        <div class="who"><span class="nm">Miłosz Madeja</span><span class="rl">Właściciel, Eurostyl</span></div>
+      </div>
+      <div class="quote reveal">
+        <p>Była to wartościowa współpraca, zwłaszcza w kontekście zbudowania struktury, podziału odpowiedzialności, wprowadzenia rutyn komunikacyjnych oraz poukładania procesów biznesowych. Doceniam konsekwentne pokazywanie perspektywy biznesowej.</p>
+        <div class="who"><span class="nm">Agnieszka Szwedowicz</span><span class="rl">CEO, Mental Path</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FIT -->
+<section class="fit">
+  <div class="wrap">
+    <h2 class="reveal">Dla kogo to jest, a dla kogo nie</h2>
+    <div class="fit-grid">
+      <div class="fit-col yes reveal">
+        <h3><span class="tag">To dla Ciebie, jeśli</span></h3>
+        <ul>
+          <li><i data-lucide="check" width="19" height="19" color="oklch(58% 0.10 195)"></i> Masz firmę powyżej 50 osób, prywatną lub rodzinną</li>
+          <li><i data-lucide="check" width="19" height="19" color="oklch(58% 0.10 195)"></i> Rosłeś szybko i straciłeś kontrolę, albo utknąłeś w miejscu</li>
+          <li><i data-lucide="check" width="19" height="19" color="oklch(58% 0.10 195)"></i> Chcesz realnej zmiany wdrożonej do końca, nie kolejnej teorii</li>
+          <li><i data-lucide="check" width="19" height="19" color="oklch(58% 0.10 195)"></i> Myślisz o sukcesji albo przygotowaniu firmy do sprzedaży</li>
+        </ul>
+      </div>
+      <div class="fit-col no reveal">
+        <h3><span class="tag">To nie dla Ciebie, jeśli</span></h3>
+        <ul>
+          <li><i data-lucide="minus" width="19" height="19" color="oklch(60% 0.015 255)"></i> Masz kilkuosobowy zespół na wczesnym etapie</li>
+          <li><i data-lucide="minus" width="19" height="19" color="oklch(60% 0.015 255)"></i> Jesteś dużą korporacją z rozbudowaną centralą HR</li>
+          <li><i data-lucide="minus" width="19" height="19" color="oklch(60% 0.015 255)"></i> Szukasz jednorazowej, godzinowej konsultacji</li>
+          <li><i data-lucide="minus" width="19" height="19" color="oklch(60% 0.015 255)"></i> Chcesz raport do szuflady, nie zmianę w firmie</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="wrap narrow">
+    <h2 class="reveal">Częste pytania</h2>
+    <div class="reveal">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Ile trwa współpraca? <i data-lucide="plus" width="22" height="22"></i></button>
+        <div class="faq-a"><p>Projekty trwają od kilku miesięcy do kilku lat. Umowa jest na czas nieokreślony z miesięcznym okresem wypowiedzenia, więc dopasowujemy długość do tego, jak głęboka jest zmiana, której potrzebuje firma.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">W jakim wymiarze wchodzi Interim Manager? <i data-lucide="plus" width="22" height="22"></i></button>
+        <div class="faq-a"><p>Elastycznie: od jednej trzeciej etatu, przez pół etatu, po pełny wymiar. Wymiar dobieramy do skali wyzwań. Przy pełnym zaangażowaniu projekt prowadzą dwie osoby, żeby zachować świeżą, zewnętrzną perspektywę.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Czy branża ma znaczenie? <i data-lucide="plus" width="22" height="22"></i></button>
+        <div class="faq-a"><p>Nie. Procesy ludzkie w każdej organizacji działają podobnie. Pracowaliśmy z firmami od budowlanki, przez farmację i medycynę, po instytucje publiczne. Metoda jest ta sama, sprawdzona w ponad 300 organizacjach.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Pracujecie zdalnie czy na miejscu? <i data-lucide="plus" width="22" height="22"></i></button>
+        <div class="faq-a"><p>Większość pracy odbywa się zdalnie, niezależnie od lokalizacji firmy. Obsługujemy klientów w całej Polsce. Spotkania na miejscu organizujemy tam, gdzie wnoszą realną wartość.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Jak szybko zobaczymy efekty? <i data-lucide="plus" width="22" height="22"></i></button>
+        <div class="faq-a"><p>Diagnozę z roadmapą dostajesz w 2&ndash;3 tygodnie. Pierwsze zmiany operacyjne widać szybko, ale trwała poprawa kultury i rentowności wymaga czasu. Dlatego co tydzień raportujemy konkretne, wypracowane efekty, żebyś wiedział, że idzie w dobrą stronę.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final" id="kontakt">
+  <div class="wrap">
+    <div class="final-card reveal">
+      <div>
+        <h2>Umów bezpłatną rozmowę</h2>
+        <p class="fp">Opowiesz, co się dzieje w firmie. My powiemy wprost, czy i jak możemy pomóc. Bez zobowiązań i bez korpo-gadki.</p>
+        <div class="reassure">
+          <span><i data-lucide="check" width="17" height="17" color="oklch(96% 0.015 250)"></i> Odpowiadamy w ciągu jednego dnia roboczego</span>
+          <span><i data-lucide="check" width="17" height="17" color="oklch(96% 0.015 250)"></i> Rozmawiamy konkretami, nie ogólnikami</span>
+          <span><i data-lucide="check" width="17" height="17" color="oklch(96% 0.015 250)"></i> Działamy zdalnie, w całej Polsce</span>
+        </div>
+      </div>
+      <form onsubmit="handleSubmit(event)">
+        <div class="field"><label for="name">Imię i nazwisko</label><input type="text" id="name" required placeholder="Jan Kowalski"></div>
+        <div class="field"><label for="company">Firma</label><input type="text" id="company" required placeholder="Nazwa firmy"></div>
+        <div class="field"><label for="size">Liczba pracowników</label>
+          <select id="size" required>
+            <option value="" disabled selected>Wybierz zakres</option>
+            <option>do 20 osób</option>
+            <option>20&ndash;50 osób</option>
+            <option>50&ndash;100 osób</option>
+            <option>100&ndash;250 osób</option>
+            <option>powyżej 250 osób</option>
+          </select>
+        </div>
+        <div class="field"><label for="email">E-mail służbowy</label><input type="email" id="email" required placeholder="jan@twojafirma.pl"></div>
+        <button type="submit" class="btn-primary">Wyślij zgłoszenie <i data-lucide="arrow-right" width="18" height="18"></i></button>
+        <p class="form-note">Zostawiając dane zgadzasz się na kontakt w sprawie współpracy.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="logo"><span class="logo-dot"></span> HR Hints</div>
+    <span>Twardy HR. Realna egzekucja. Sprawdzona w 300+ firmach.</span>
+  </div>
+</footer>
+
+<!-- STICKY MOBILE CTA -->
+<div class="sticky-cta" id="stickyCta">
+  <div class="sc-text"><strong>Firma się sypie?</strong><small>Bezpłatna rozmowa, bez zobowiązań</small></div>
+  <a href="#kontakt" class="btn-primary">Umów rozmowę</a>
+</div>
+
+<script>
+  lucide.createIcons();
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) { setTimeout(() => e.target.classList.add('in'), (i % 4) * 70); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  const sticky = document.getElementById('stickyCta');
+  const hero = document.querySelector('.hero');
+  const final = document.getElementById('kontakt');
+  function toggleSticky() {
+    const past = hero.getBoundingClientRect().bottom < 0;
+    const atForm = final.getBoundingClientRect().top < window.innerHeight;
+    if (past && !atForm) sticky.classList.add('show'); else sticky.classList.remove('show');
+  }
+  window.addEventListener('scroll', toggleSticky, { passive: true });
+  toggleSticky();
+
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const ans = item.querySelector('.faq-a');
+    const open = item.classList.contains('open');
+    if (open) { item.classList.remove('open'); ans.style.maxHeight = null; }
+    else { item.classList.add('open'); ans.style.maxHeight = ans.scrollHeight + 'px'; }
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.innerHTML = 'Dziękujemy, odezwiemy się wkrótce';
+    btn.style.background = 'oklch(58% 0.10 195)';
+    btn.disabled = true;
+  }
+</script>
+</body>
+</html>
